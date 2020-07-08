@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://LoonyLips.gd" type="Script" id=1]
 [ext_resource path="res://gfx/blackboard.jpg" type="Texture" id=2]
 [ext_resource path="res://gfx/Feltpen.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://gfx/blue_button11.png" type="Texture" id=4]
 [ext_resource path="res://gfx/blue_button12.png" type="Texture" id=5]
+[ext_resource path="res://Story.gd" type="Script" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -94,5 +95,22 @@ margin_right = 976.0
 margin_bottom = 68.0
 custom_fonts/font = SubResource( 3 )
 text = "ok"
+
+[node name="StoryBook" type="Node" parent="."]
+
+[node name="Story0" type="Node" parent="StoryBook"]
+script = ExtResource( 6 )
+prompts = PoolStringArray( "a name", "a noun", "an emotion", "a noun" )
+story = "There once was a man named %s who everyone in his village thought was a %s. Filled with %s, he left the village in search of the meaning of %s."
+
+[node name="Story1" type="Node" parent="StoryBook"]
+script = ExtResource( 6 )
+prompts = PoolStringArray( "a noun", "a past tense verb", "a noun", "an adjective" )
+story = "A girl's %s was %s and she went in search of %s. She was %s on her journey and lost everything"
+
+[node name="Story2" type="Node" parent="StoryBook"]
+script = ExtResource( 6 )
+prompts = PoolStringArray( "a noun", "a place", "an adjective", "a place" )
+story = "A woman and her %s were stranded in %s when attacked by %s animals. They ran to %s to seek shelter."
 [connection signal="text_entered" from="VBoxContainer/HBoxContainer/PlayerText" to="." method="_on_PlayerText_text_entered"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/TextureButton" to="." method="_on_TextureButton_pressed"]

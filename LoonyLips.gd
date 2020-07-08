@@ -1,37 +1,41 @@
 extends Control
 
 var player_words = []
-var template = [
-		{ # new dictionary
-		"story" : "There once was a man named %s who everyone in his village thought was a %s. Filled with %s, he left the village in search of the meaning of %s.",
-		"prompts" : ["a name", "a noun", "an emotion", "a noun"]
-		},
-		{ # new dictionary
-		"story" : "A girl's %s was %s and she went in search of %s. She was %s on her journey and lost everything",
-		"prompts" : ["a noun", "a past tense verb", "a noun", "an adjective"]
-		},
-		{ # new dictionary
-		"story" : "A woman and her %s were stranded in %s when attacked by %s animals. They ran to %s to seek shelter.",
-		"prompts" : ["a noun", "a place", "an adjective", "a place"],
-		},
-		]
-var current_story
+var current_story = {}
+#var template = [
+#		{ # new dictionary
+#		"story" : "There once was a man named %s who everyone in his village thought was a %s. Filled with %s, he left the village in search of the meaning of %s.",
+#		"prompts" : ["a name", "a noun", "an emotion", "a noun"]
+#		},
+#		{ # new dictionary
+#		"story" : "A girl's %s was %s and she went in search of %s. She was %s on her journey and lost everything",
+#		"prompts" : ["a noun", "a past tense verb", "a noun", "an adjective"]
+#		},
+#		{ # new dictionary
+#		"story" : "A woman and her %s were stranded in %s when attacked by %s animals. They ran to %s to seek shelter.",
+#		"prompts" : ["a noun", "a place", "an adjective", "a place"],
+#		},
+#		]
 
 onready var PlayerText = $VBoxContainer/HBoxContainer/PlayerText
 onready var ConfirmText = $VBoxContainer/HBoxContainer/ConfirmText
 onready var DisplayText = $VBoxContainer/DisplayText
-
 
 func _ready():
 	set_current_story()
 	DisplayText.text = "Welcome to Loony Lips! We're going to try our hand at storytelling! \n\n"
 	ConfirmText.text = "ok"
 	check_player_words_length()
+	PlayerText.grab_focus()
 
 
 func set_current_story():
 	randomize()
-	current_story = template[randi() % template.size()]
+	var stories = $StoryBook.get_child_count()
+	var selected_story = randi() % stories
+	current_story.prompts = $StoryBook.get_child(selected_story).prompts
+	current_story.story = $StoryBook.get_child(selected_story).story
+#	current_story = template[randi() % template.size()]
 
 
 func _on_PlayerText_text_entered(_new_text):
@@ -66,7 +70,6 @@ func check_player_words_length():
 
 func prompt_player():
 	DisplayText.text += "May I have " + current_story.prompts[player_words.size()] + " please?"
-	PlayerText.grab_focus()
 
 
 func end_input():
