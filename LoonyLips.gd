@@ -21,12 +21,12 @@ onready var PlayerText = $VBoxContainer/HBoxContainer/PlayerText
 onready var ConfirmText = $VBoxContainer/HBoxContainer/ConfirmText
 onready var DisplayText = $VBoxContainer/DisplayText
 
+
 func _ready():
 	set_current_story()
 	DisplayText.text = "Welcome to Loony Lips! We're going to try our hand at storytelling! \n\n"
 	ConfirmText.text = "ok"
 	check_player_words_length()
-	PlayerText.grab_focus()
 
 
 func set_current_story():
@@ -66,6 +66,7 @@ func check_player_words_length():
 
 func prompt_player():
 	DisplayText.text += "May I have " + current_story.prompts[player_words.size()] + " please?"
+	PlayerText.grab_focus()
 
 
 func end_input():
